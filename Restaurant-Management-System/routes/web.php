@@ -32,3 +32,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return Inertia::render('Home'); // Ensure Home.vue exists in resources/js/Pages
 })->name('home');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
