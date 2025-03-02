@@ -7,9 +7,17 @@ import { usePage } from '@inertiajs/vue3';
 import { ChevronsUpDown } from 'lucide-vue-next';
 import UserMenuContent from './UserMenuContent.vue';
 
+// Get page props
 const page = usePage<SharedData>();
-const user = page.props.auth.user as User;
+
+// Ensure `auth` exists before accessing `user`
+const auth = page.props.auth ?? { user: null };
+
+// Extract user safely
+const user = auth.user as User;
+
 </script>
+
 
 <template>
     <SidebarMenu>
