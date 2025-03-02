@@ -25,7 +25,13 @@ const user = auth.user as User;
             <DropdownMenu>
                 <DropdownMenuTrigger as-child>
                     <SidebarMenuButton size="lg" class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                        <UserInfo :user="auth.user" />
+                        <!-- Welcome Message -->
+                        <div>
+                            <p v-if="user">Welcome, {{ user.name }}!</p>
+                            <p v-else>Please log in</p>
+                        </div>
+                        <!-- User Info Component -->
+                        <UserInfo :user="user" />
                         <ChevronsUpDown class="ml-auto size-4" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
@@ -36,3 +42,4 @@ const user = auth.user as User;
         </SidebarMenuItem>
     </SidebarMenu>
 </template>
+
