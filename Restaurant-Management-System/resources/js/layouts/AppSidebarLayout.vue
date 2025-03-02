@@ -23,6 +23,9 @@
             <li><Link href="/orders" class="hover:underline">Orders</Link></li>
             <li><Link href="/dashboard" class="hover:underline">Dashboard</Link></li>
           </ul>
+
+          <!-- Add NavUser Here -->
+          <NavUser :auth="page.props.auth" />
         </nav>
   
         <!-- Page Content -->
@@ -31,9 +34,11 @@
         </main>
       </div>
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import { Link } from '@inertiajs/vue3';
-  </script>
-  
+<script setup>
+import { Link, usePage } from '@inertiajs/vue3';
+import NavUser from '@/components/NavUser.vue';
+
+const page = usePage();
+</script>
