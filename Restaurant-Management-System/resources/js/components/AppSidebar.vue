@@ -14,6 +14,26 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    { 
+        title: 'Orders',
+        href: '/orders',
+        icon: BookOpen
+    },
+    { 
+        title: 'Hours & Location',
+        href: '/openings',
+        icon: Folder
+    },
+    { 
+        title: 'Private Events',
+        href: '/events',
+        icon: BookOpen
+    },
+    { 
+        title: 'About',
+        href: '/about',
+        icon: Folder
+    },
 ];
 
 const footerNavItems: NavItem[] = [
