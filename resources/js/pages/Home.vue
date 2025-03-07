@@ -36,7 +36,8 @@ import Navbar from "@/pages/Customer/Navbar.vue";
 import Footer from "@/pages/Customer/Footer.vue";
 
 // Define the menu route
-const menuRoute = route('menu'); // ✅ Fix: Make sure this matches your Laravel route name
+const menuRoute = route('menu');
+ // ✅ Fix: Make sure this matches your Laravel route name
 </script>
 
 <style scoped>

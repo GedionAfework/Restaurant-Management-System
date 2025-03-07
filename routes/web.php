@@ -58,3 +58,23 @@ Route::get('/', function () {
 Route::get('/menu', function () {
     return Inertia::render('Customer/pages/Menu');
 })->name('menu');
+
+Route::get('/reservation', function () {
+    return Inertia::render('Customer/pages/Reservation');
+})->name('reservation');
+
+Route::get('/location', function () {
+    return Inertia::render('Customer/pages/Location');
+})->name('location');
+
+Route::get('/gift-cards', function () {
+    return Inertia::render('Customer/pages/GiftCard');
+})->name('gift-cards');
+
+Route::get('/membership', function () {
+    return Inertia::render('Customer/pages/Membership');
+})->name('membership');
+
+Route::get('/catering', function () {
+    return Inertia::render('Customer/pages/Catering');
+})->name('catering');
