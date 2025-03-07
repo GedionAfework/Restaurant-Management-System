@@ -54,3 +54,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/', function () {
     return Inertia::render('Home');  // Render the Home.vue page if needed
 });
+
+Route::get('/menu', function () {
+    return Inertia::render('Customer/pages/Menu');
+})->name('menu');
