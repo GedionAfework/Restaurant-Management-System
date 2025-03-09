@@ -1,115 +1,98 @@
-<!-- <script setup lang="ts">
-import InputError from '@/components/InputError.vue';
-import TextLink from '@/components/TextLink.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthBase from '@/layouts/AuthLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
-import { LoaderCircle } from 'lucide-vue-next';
-
-const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-});
-
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
-};
-</script>
-
 <template>
-    <AuthBase title="Create an account" description="Enter your details below to create your account">
-        <Head title="Register" />
-
-        <form @submit.prevent="submit" class="flex flex-col gap-6">
-            <div class="grid gap-6">
-                <div class="grid gap-2">
-                    <Label for="name">Name</Label>
-                    <Input id="name" type="text" required autofocus :tabindex="1" autocomplete="name" v-model="form.name" placeholder="Full name" />
-                    <InputError :message="form.errors.name" />
-                </div>
-
-                <div class="grid gap-2">
-                    <Label for="email">Email address</Label>
-                    <Input id="email" type="email" required :tabindex="2" autocomplete="email" v-model="form.email" placeholder="email@example.com" />
-                    <InputError :message="form.errors.email" />
-                </div>
-
-                <div class="grid gap-2">
-                    <Label for="password">Password</Label>
-                    <Input
-                        id="password"
-                        type="password"
-                        required
-                        :tabindex="3"
-                        autocomplete="new-password"
-                        v-model="form.password"
-                        placeholder="Password"
-                    />
-                    <InputError :message="form.errors.password" />
-                </div>
-
-                <div class="grid gap-2">
-                    <Label for="password_confirmation">Confirm password</Label>
-                    <Input
-                        id="password_confirmation"
-                        type="password"
-                        required
-                        :tabindex="4"
-                        autocomplete="new-password"
-                        v-model="form.password_confirmation"
-                        placeholder="Confirm password"
-                    />
-                    <InputError :message="form.errors.password_confirmation" />
-                </div>
-
-                <Button type="submit" class="mt-2 w-full" tabindex="5" :disabled="form.processing">
-                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Create account
-                </Button>
-            </div>
-
-            <div class="text-center text-sm text-muted-foreground">
-                Already have an account?
-                <TextLink :href="route('login')" class="underline underline-offset-4" :tabindex="6">Log in</TextLink>
-            </div>
+    <div class="min-h-screen bg-black text-white flex items-center justify-center">
+      <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-3xl font-extrabold text-center mb-6">Create Your Account</h2>
+  
+        <!-- Display global errors -->
+        <div v-if="form.errors" class="bg-red-600 p-4 rounded-md mb-4">
+          <ul>
+            <li v-for="(error, index) in form.errors" :key="index" class="text-white">{{ error }}</li>
+          </ul>
+        </div>
+  
+        <form @submit.prevent="register" class="space-y-4">
+          <!-- Name Field -->
+          <div>
+            <input
+              v-model="form.name"
+              type="text"
+              placeholder="Full Name"
+              class="w-full p-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <!-- Display Name Field Error -->
+            <div v-if="form.errors.name" class="text-sm text-red-500">{{ form.errors.name }}</div>
+          </div>
+  
+          <!-- Email Field -->
+          <div>
+            <input
+              v-model="form.email"
+              type="email"
+              placeholder="Email Address"
+              class="w-full p-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <!-- Display Email Field Error -->
+            <div v-if="form.errors.email" class="text-sm text-red-500">{{ form.errors.email }}</div>
+          </div>
+  
+          <!-- Password Field -->
+          <div>
+            <input
+              v-model="form.password"
+              type="password"
+              placeholder="Password"
+              class="w-full p-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <!-- Display Password Field Error -->
+            <div v-if="form.errors.password" class="text-sm text-red-500">{{ form.errors.password }}</div>
+          </div>
+  
+          <!-- Confirm Password Field -->
+          <div>
+            <input
+              v-model="form.password_confirmation"
+              type="password"
+              placeholder="Confirm Password"
+              class="w-full p-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            <!-- Display Confirm Password Field Error -->
+            <div v-if="form.errors.password_confirmation" class="text-sm text-red-500">{{ form.errors.password_confirmation }}</div>
+          </div>
+  
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full py-3 rounded-lg bg-red-500 text-white text-lg font-bold hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Sign Up
+          </button>
+          <div class="text-center mt-4">
+            <p class="text-sm text-gray-300">Already have an account?</p>
+            <Link :href="route('login')" class="text-red-500 hover:underline">Login</Link>
+          </div>
         </form>
-    </AuthBase>
-</template> -->
-
-
-<script setup>
-import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
-
-const form = useForm({
-  name: "",
-  email: "",
-  password: "",
-  password_confirmation: "",
-});
-
-const register = () => {
-  form.post("/register", {
-    onSuccess: () => {
-      window.location.href = "/dashboard"; // Redirect after registration
-    },
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { useForm } from "@inertiajs/vue3";
+  import { route } from 'ziggy-js';
+  import { Link } from '@inertiajs/vue3';
+  
+  const form = useForm({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
   });
-};
-</script>
-
-<template>
-  <div class="flex flex-col items-center">
-    <h1 class="text-xl font-bold">Register</h1>
-    <input v-model="form.name" type="text" placeholder="Name" class="border p-2" />
-    <input v-model="form.email" type="email" placeholder="Email" class="border p-2 mt-2" />
-    <input v-model="form.password" type="password" placeholder="Password" class="border p-2 mt-2" />
-    <input v-model="form.password_confirmation" type="password" placeholder="Confirm Password" class="border p-2 mt-2" />
-    <button @click="register" class="bg-green-500 text-white p-2 mt-2">Register</button>
-  </div>
-</template>
+  
+  const register = () => {
+    form.post("/register", {
+      onSuccess: () => {
+        window.location.href = "/"; // Redirect after registration
+      },
+    });
+  };
+  </script>
+  

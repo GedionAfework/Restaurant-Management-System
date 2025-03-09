@@ -19,6 +19,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Inertia\Inertia;
 
 // Authentication Routes
@@ -45,16 +46,17 @@ use Inertia\Inertia;
 //     Route::get('/orders/{id}', [OrderController::class, 'show']);
 // });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', [
-            'user' => auth()->user(),
-        ]);
-    });
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('Dashboard', [
+//             'user' => auth()->user(),
+//         ]);
+//     });
+// });
 Route::get('/', function () {
     return Inertia::render('Home');  // Render the Home.vue page if needed
-});
+})->name('Home');
+
 
 Route::get('/menu', function () {
     return Inertia::render('Customer/pages/Menu');
@@ -82,6 +84,7 @@ Route::get('/catering', function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::get('/user', [AuthController::class, 'user'])->middleware('auth');
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
