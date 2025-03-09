@@ -78,3 +78,9 @@ Route::get('/membership', function () {
 Route::get('/catering', function () {
     return Inertia::render('Customer/pages/Catering');
 })->name('catering');
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::get('/user', [AuthController::class, 'user'])->middleware('auth');

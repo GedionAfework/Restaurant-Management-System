@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
@@ -80,4 +80,36 @@ const submit = () => {
             </div>
         </form>
     </AuthBase>
+</template> -->
+
+
+<script setup>
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+  name: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
+});
+
+const register = () => {
+  form.post("/register", {
+    onSuccess: () => {
+      window.location.href = "/dashboard"; // Redirect after registration
+    },
+  });
+};
+</script>
+
+<template>
+  <div class="flex flex-col items-center">
+    <h1 class="text-xl font-bold">Register</h1>
+    <input v-model="form.name" type="text" placeholder="Name" class="border p-2" />
+    <input v-model="form.email" type="email" placeholder="Email" class="border p-2 mt-2" />
+    <input v-model="form.password" type="password" placeholder="Password" class="border p-2 mt-2" />
+    <input v-model="form.password_confirmation" type="password" placeholder="Confirm Password" class="border p-2 mt-2" />
+    <button @click="register" class="bg-green-500 text-white p-2 mt-2">Register</button>
+  </div>
 </template>
