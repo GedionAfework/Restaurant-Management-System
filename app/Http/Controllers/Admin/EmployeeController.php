@@ -20,7 +20,6 @@ class EmployeeController extends Controller
         return Inertia::render('Admin/Employees/Create');
     }
 
-    // Store a newly created employee
     public function store(Request $request)
     {
         $validated = $request->validate([
