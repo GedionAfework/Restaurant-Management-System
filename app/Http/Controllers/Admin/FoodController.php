@@ -70,13 +70,10 @@ class FoodController extends Controller
         return redirect()->route('admin.food.index')->with('success', 'Food deleted successfully.');
     }
 
-    // Add the API method for fetching foods
     public function apiIndex(Request $request)
     {
-        // Paginate food items
         $foods = Food::paginate(10);
 
-        // Return data as JSON
         return response()->json($foods);
     }
 }
