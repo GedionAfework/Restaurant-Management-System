@@ -1,41 +1,65 @@
 <template>
-    <div class="menu-page min-h-screen bg-black text-white">
-      <div class="container mx-auto px-6 py-10">
-        <h1 class="text-4xl font-extrabold text-center mb-6">Our Menu</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="menu-item bg-gray-800 p-6 rounded-lg">
-            <img src="../../../../../assets/images/Adobe Express - file (1).png" alt="Burger 1" class="w-full h-48 object-cover rounded-lg mb-4">
-            <h2 class="text-xl font-semibold mb-2">Cheese Burger</h2>
-            <p class="text-gray-400 mb-4">A classic cheese burger with all the fixings.</p>
-            <p class="text-xl font-bold">$8.99</p>
-          </div>
-  
-          <div class="menu-item bg-gray-800 p-6 rounded-lg">
-            <img src="../../../../../assets/images/burg-hero-removebg-preview.png" alt="Burger 2" class="w-full h-48 object-cover rounded-lg mb-4">
-            <h2 class="text-xl font-semibold mb-2">Chicken Burger</h2>
-            <p class="text-gray-400 mb-4">A crispy fried chicken patty with fresh vegetables.</p>
-            <p class="text-xl font-bold">$9.99</p>
-          </div>
-  
-          <!-- Add more items as necessary -->
+  <div class="menu">
+    <h1>Menu</h1>
+    <ul>
+      <!-- Loop through the food items and display them -->
+      <li v-for="food in foods.data" :key="food.id">
+        <div class="food-item">
+          <h2>{{ food.name }}</h2>
+          <p>{{ food.description }}</p>
+          <p>${{ food.price }}</p>
         </div>
-      </div>
+      </li>
+    </ul>
+
+    <!-- Pagination controls -->
+    <div v-if="foods.links">
+      <button 
+        v-for="(link, index) in foods.links" 
+        :key="index" 
+        @click="fetchMenu(link.url)"
+        :disabled="!link.url"
+      >
+        {{ link.label }}
+      </button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "Menu",
-  };
-  </script>
-  
-  <style scoped>
-  .menu-item {
-    transition: transform 0.3s ease;
-  }
-  
-  .menu-item:hover {
-    transform: scale(1.05);
-  }
-  </style>
-  
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      foods: {
+        data: [],  // Food items
+        links: []  // Pagination links
+      },
+    };
+  },
+  mounted() {
+    // Fetch the menu when the component is mounted
+    this.fetchMenu();
+  },
+  methods: {
+    async fetchMenu(url = '/api/menu') {
+      try {
+        const response = await fetch(url);  // Use fetch to get data
+        const data = await response.json();  // Parse the JSON response
+        this.foods = data;  // Store the food items and pagination links
+      } catch (error) {
+        console.error('Error fetching menu data:', error);
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add styling for the menu page */
+.menu {
+  padding: 20px;
+}
+.food-item {
+  margin-bottom: 20px;
+}
+</style>

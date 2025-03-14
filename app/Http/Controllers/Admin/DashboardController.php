@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
+    // Display the dashboard
     public function index()
     {
-        // For now, just return a view with a simple message
-        return view('admin.dashboard');
+        return Inertia::render('Admin/Dashboard'); // Ensure the corresponding Vue component exists
     }
 }

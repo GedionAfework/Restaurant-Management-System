@@ -1,11 +1,11 @@
 import '../css/app.css';
-
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h, reactive } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
+import { Link } from '@inertiajs/vue3'; // Import Link component
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -16,7 +16,7 @@ declare module 'vite/client' {
 
     interface ImportMeta {
         readonly env: ImportMetaEnv;
-        readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>;
+        readonly glob: <T>(pattern: string) => Record<string, () => Promise<T>>; 
     }
 }
 
@@ -29,7 +29,7 @@ export const auth = reactive({
         try {
             const response = await fetch('/user', {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`, // Ensure token is sent
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
                     'Accept': 'application/json'
                 },
                 credentials: 'include'
@@ -53,6 +53,9 @@ createInertiaApp({
         const vueApp = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue);
+
+        // 🔹 Register Link component globally
+        vueApp.component('Link', Link); // This line registers Link globally
 
         // 🔹 Provide `auth` globally so components can access it
         vueApp.provide('auth', auth);
