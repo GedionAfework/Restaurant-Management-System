@@ -9,21 +9,12 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    // Display all employees
-    // public function index()
-    // {
-    //     return Inertia::render('Admin/Employees/Index', [
-    //         'employees' => Employee::all(),
-    //     ]);
-    // }
 
     public function index()
     {
         $employees = Employee::all();
         return inertia('Admin/Employees', ['employees' => $employees]);
     }
-    
-    // Show the form to create a new employee
     public function create()
     {
         return Inertia::render('Admin/Employees/Create');
