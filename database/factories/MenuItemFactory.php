@@ -3,24 +3,20 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\MenuItem;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MenuItem>
- */
 class MenuItemFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = MenuItem::class;
+
+    public function definition()
     {
         return [
-            'name' => $faker->word(),
-        'description' => $faker->sentence(),
-        'price' => $faker->randomFloat(2, 5, 50),
-        'category_id' => \App\Models\MenuCategory::factory(),
+            'name' => $this->faker->word,
+            'type' => $this->faker->randomElement(['Breakfast', 'Main Course', 'Dessert', 'Drink']),
+            'description' => $this->faker->sentence,
+            'picture' => null,
+            'price' => $this->faker->randomFloat(2, 5, 50),
         ];
     }
 }

@@ -2,19 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MenuItem extends Model
 {
-    use HasFactory;
-
-    protected $primaryKey = 'item_id';
-    protected $fillable = ['name', 'description', 'price', 'category_id'];
-
-    public function category()
-    {
-        return $this->belongsTo(MenuCategory::class, 'category_id');
-    }
+    protected $table = 'menu_items'; // Matches your migration
+    protected $fillable = ['name', 'type', 'description', 'picture', 'price'];
 }
-

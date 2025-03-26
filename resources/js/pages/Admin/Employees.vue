@@ -10,7 +10,9 @@
 </template>
 
 <script>
+import AdminLayout from './Layout.vue';
 export default {
+  components : { AdminLayout },
   props: {
     employees: Array,  // Data passed from the controller
   },

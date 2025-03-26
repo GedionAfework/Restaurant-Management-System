@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
     // Show the registration form (via Inertia)
     public function showRegisterForm()
     {
-        return inertia('auth/Register'); // Make sure you have the correct Inertia component path
+        return inertia('Auth/Register');
     }
 
     // Handle the registration form submission
@@ -27,16 +26,13 @@ class RegisterController extends Controller
         ]);
 
         // Create a new user in the database
-        $user = User::create([
+        User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']), // Hash the password
         ]);
 
-        // Log the user in after registration
-        Auth::login($user);
-
-        // Redirect to the dashboard or a different route
-        return redirect()->route('Home');
+        // Redirect to the login page (no automatic login)
+        return redirect()->route('login');
     }
 }

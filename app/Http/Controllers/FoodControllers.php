@@ -15,7 +15,7 @@ class FoodController extends Controller
         // Paginate food items (10 items per page by default)
         $foods = Food::paginate(10);
 
-        return Inertia::render('Admin/Food/Index', [
+        return Inertia::render('Admin/Food', [
             'foods' => $foods,
         ]);
     }
@@ -36,7 +36,7 @@ class FoodController extends Controller
 
         Food::create($validated);
 
-        return redirect()->route('admin.food.index');  // Redirect back to the list of foods
+        return redirect()->route('admin.food');  // Redirect back to the list of foods
     }
 
     // Show the form to edit the food
@@ -59,7 +59,7 @@ class FoodController extends Controller
         $food = Food::findOrFail($id);
         $food->update($validated);
 
-        return redirect()->route('admin.food.index');
+        return redirect()->route('admin.food');
     }
 
     // Delete the food
@@ -67,7 +67,7 @@ class FoodController extends Controller
     {
         Food::destroy($id);
 
-        return redirect()->route('admin.food.index')->with('success', 'Food deleted successfully.');
+        return redirect()->route('admin.food')->with('success', 'Food deleted successfully.');
     }
 
     // Add the API method for fetching foods

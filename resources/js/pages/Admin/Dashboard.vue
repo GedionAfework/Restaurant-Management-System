@@ -1,7 +1,7 @@
 <template>
   <AdminLayout>
-    <h1 class="text-2xl font-bold">Admin Dashboard</h1>
-    <p>Welcome, admin!</p>
+    <h1 class="text-2xl font-bold text-black">Admin Dashboard</h1>
+    <p class="text-red-500">Welcome, admin!</p>
   </AdminLayout>
 </template>
 

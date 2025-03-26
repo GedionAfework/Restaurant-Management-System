@@ -6,24 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('food', function (Blueprint $table) {
+        Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('type')->nullable(); // e.g., "Appetizer", "Main Course"
+            $table->string('type')->nullable(); // Added type column
             $table->text('description')->nullable();
-            $table->string('picture')->nullable(); // Path to uploaded image
-            $table->decimal('price', 8, 2);
+            $table->string('picture')->nullable();
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
-    
+
     public function down(): void
     {
-        Schema::dropIfExists('food');
+        Schema::dropIfExists('menu_items');
     }
 };
