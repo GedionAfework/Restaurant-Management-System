@@ -22,7 +22,10 @@
             <Link :href="route('admin.menu-categories.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📋 Menu Categories</Link>
           </li>
           <li v-if="hasPermission('orders-view') || isAdmin">
-            <Link :href="ordersRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📦 Orders</Link>
+            <Link :href="route('admin.orders.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📦 Orders</Link>
+          </li>
+          <li v-if="hasPermission('orders-view') || isAdmin">
+            <Link :href="route('admin.kitchen.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍳 Kitchen Display</Link>
           </li>
           <li v-if="hasPermission('tables-view') || isAdmin">
             <Link :href="route('admin.tables.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🪑 Tables</Link>
@@ -54,5 +57,4 @@ const homeRoute = route("home");
 const dashboardRoute = route('admin.dashboard');
 const employeesRoute = route('admin.employees');
 const foodRoute = route('admin.food');
-const ordersRoute = route('admin.orders');
 </script>

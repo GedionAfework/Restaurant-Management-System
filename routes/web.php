@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\MenuCategoryController;
+use App\Http\Controllers\Admin\KitchenController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -107,10 +108,17 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     // Order Management
     Route::controller(OrderController::class)->middleware('permission:orders-view')->group(function () {
-        Route::get('/orders', 'index')->name('admin.orders');
+        Route::get('/orders', 'index')->name('admin.orders.index');
         Route::get('/orders/{id}', 'show')->name('admin.orders.show');
         Route::put('/orders/{id}', 'update')->middleware('permission:orders-update')->name('admin.orders.update');
         Route::post('/orders', 'store')->middleware('permission:orders-create')->name('admin.orders.store');
+    });
+
+    // Kitchen Display System
+    Route::controller(KitchenController::class)->middleware('permission:orders-view')->group(function () {
+        Route::get('/kitchen', 'index')->name('admin.kitchen.index');
+        Route::post('/kitchen/orders/{id}/status', 'updateStatus')->middleware('permission:orders-update')->name('admin.kitchen.update-status');
+        Route::get('/kitchen/orders', 'getOrders')->name('admin.kitchen.get-orders');
     });
 
     // Role Management

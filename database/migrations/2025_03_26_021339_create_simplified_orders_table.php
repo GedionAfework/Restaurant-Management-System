@@ -21,7 +21,14 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2); // Price of the item at order time
             $table->decimal('total_amount', 10, 2); // quantity * price
-            $table->string('status')->default('pending');
+            $table->string('status')->default('pending'); // pending, preparing, ready, completed, cancelled
+            $table->text('order_notes')->nullable(); // Customer notes/instructions
+            $table->text('kitchen_notes')->nullable(); // Kitchen staff notes
+            $table->timestamp('preparing_at')->nullable(); // When kitchen started preparing
+            $table->timestamp('ready_at')->nullable(); // When order is ready
+            $table->timestamp('completed_at')->nullable(); // When order is completed
+            $table->timestamp('estimated_completion_at')->nullable(); // Estimated completion time
+            $table->integer('priority')->default(0); // Order priority (higher = more urgent)
             $table->timestamps();
         });
     }
