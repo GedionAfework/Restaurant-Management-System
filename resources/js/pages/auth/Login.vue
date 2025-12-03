@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router } from "@inertiajs/vue3";
 import { route } from 'ziggy-js';
 import { Link } from '@inertiajs/vue3';
 
@@ -57,15 +57,12 @@ const form = useForm({
 });
 
 const login = () => {
-  form.post(route('login'), { // Use route('login') for consistency
+  form.post(route('login'), {
     onSuccess: () => {
       // Set localStorage to indicate logged-in state
       localStorage.setItem("isLoggedIn", "true");
-      // Use Inertia to navigate without full reload
-      form.visit(route('Home'), {
-        preserveState: true,
-        preserveScroll: true,
-      });
+      // Redirect to home page
+      router.visit(route('home'));
     },
     onError: (errors) => {
       console.log("Login failed:", errors);

@@ -10,7 +10,7 @@
         </div>
         <Link
           v-if="hasPermission('menu-create') || isAdmin"
-          :href="route('admin.menu-categories.create')"
+          :href="route('menu-categories.create')"
           class="glass-button px-6 py-3 rounded-lg text-white font-semibold hover:scale-105 transition"
         >
           ➕ Create Category
@@ -52,7 +52,7 @@
 
           <div class="flex space-x-2 pt-4 border-t border-white/20">
             <Link
-              :href="route('admin.menu-categories.edit', category.category_id)"
+              :href="route('menu-categories.edit', category.category_id)"
               @click.stop
               v-if="hasPermission('menu-edit') || isAdmin"
               class="flex-1 glass-button text-center py-2 rounded text-sm"
@@ -79,7 +79,7 @@
           <p class="text-white/70 mb-4">Create your first category to organize menu items</p>
           <Link
             v-if="hasPermission('menu-create') || isAdmin"
-            :href="route('admin.menu-categories.create')"
+            :href="route('menu-categories.create')"
             class="glass-button px-6 py-3 rounded-lg inline-block"
           >
             ➕ Create Category
@@ -107,7 +107,7 @@ const isAdmin = computed(() => user.value?.is_admin || false)
 
 const deleteCategory = (id) => {
   if (confirm('Are you sure you want to delete this category?')) {
-    router.delete(route('admin.menu-categories.destroy', id))
+    router.delete(route('menu-categories.destroy', id))
   }
 }
 </script>

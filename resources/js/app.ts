@@ -5,7 +5,7 @@ import type { DefineComponent } from 'vue';
 import { createApp, h, reactive } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
-import { Link } from '@inertiajs/vue3'; // Import Link component
+import { Link, usePage } from '@inertiajs/vue3'; // Import Link component
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -22,35 +22,30 @@ declare module 'vite/client' {
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-// 🔹 Authentication state
+// 🔹 Authentication state - Using Inertia's shared props instead of API call
 export const auth = reactive({
     user: null,
-    async fetchUser() {
-        try {
-            const response = await fetch('/user', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-                    'Accept': 'application/json'
-                },
-                credentials: 'include'
-            });
-
-            if (response.ok) {
-                this.user = await response.json();
-            } else {
-                this.user = null;
-            }
-        } catch (error) {
-            console.error('Failed to fetch user:', error);
-            this.user = null;
-        }
+    // User data comes from Inertia's shared props, no need for API call
+    setUser(user: any) {
+        this.user = user;
     }
 });
 
 createInertiaApp({
     resolve: name =>  resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
-        const vueApp = createApp({ render: () => h(App, props) })
+        const vueApp = createApp({ 
+            render: () => {
+                // 🔹 Set user from Inertia's shared props on each render
+                const page = props.initialPage?.props;
+                if (page?.auth?.user) {
+                    auth.setUser(page.auth.user);
+                } else {
+                    auth.setUser(null);
+                }
+                return h(App, props);
+            }
+        })
             .use(plugin)
             .use(ZiggyVue);
 
@@ -69,6 +64,3 @@ createInertiaApp({
 
 // This will set light/dark mode on page load...
 initializeTheme();
-
-// 🔹 Fetch user data when the app starts
-auth.fetchUser();

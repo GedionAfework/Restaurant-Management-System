@@ -88,7 +88,7 @@
             <!-- Actions -->
             <div class="flex justify-end space-x-4 pt-6 border-t border-white/20">
               <Link
-                :href="route('admin.permissions.index')"
+                :href="route('permissions.index')"
                 class="glass-button px-6 py-3 rounded-lg"
               >
                 Cancel
@@ -127,7 +127,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.put(route('admin.permissions.update', props.permission.id))
+  form.put(route('permissions.update', props.permission.id))
 }
 
 const processing = form.processing

@@ -35,6 +35,10 @@ export function usePermissions() {
     return user.value.role?.slug === roleSlug
   }
 
+  const isAdmin = computed(() => {
+    return user.value?.is_admin === true || user.value?.role?.slug === 'admin'
+  })
+
   return {
     user,
     permissions,
@@ -42,6 +46,7 @@ export function usePermissions() {
     hasAnyPermission,
     hasAllPermissions,
     hasRole,
+    isAdmin,
   }
 }
 

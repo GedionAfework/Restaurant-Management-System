@@ -7,7 +7,7 @@
           <p class="text-white/80">Manage user roles and permissions</p>
         </div>
         <Link
-          :href="route('admin.roles.create')"
+          :href="route('roles.create')"
           class="glass-button px-6 py-3 rounded-lg text-white font-semibold hover:scale-105 transition"
         >
           ➕ Create Role
@@ -71,7 +71,7 @@
                 <td class="py-4 px-4 text-right">
                   <div class="flex justify-end space-x-2">
                     <Link
-                      :href="route('admin.roles.edit', role.id)"
+                      :href="route('roles.edit', role.id)"
                       class="glass-button px-4 py-2 text-sm rounded"
                       :class="{ 'opacity-50 cursor-not-allowed': role.is_system }"
                       :disabled="role.is_system"
@@ -125,7 +125,7 @@ const props = defineProps({
 
 const deleteRole = (id) => {
   if (confirm('Are you sure you want to delete this role?')) {
-    router.delete(route('admin.roles.destroy', id))
+    router.delete(route('roles.destroy', id))
   }
 }
 </script>

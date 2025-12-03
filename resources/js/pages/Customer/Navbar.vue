@@ -20,6 +20,15 @@
       <Link :href="cateringRoute" class="text-white font-extrabold border-b-2 border-transparent hover:border-white px-4 py-2 cursor-pointer">Catering</Link>
       <Link :href="menuRoute" class="text-white font-extrabold border-b-2 border-transparent hover:border-white px-4 py-2 cursor-pointer">Menu</Link>
 
+      <!-- Admin Panel Link (only for admins) -->
+      <Link 
+        v-if="isAdmin" 
+        :href="route('admin.dashboard')" 
+        class="text-yellow-400 font-extrabold border-b-2 border-transparent hover:border-yellow-400 px-4 py-2 cursor-pointer"
+      >
+        🔐 Admin Panel
+      </Link>
+
       <!-- User Options inside Hamburger Menu (Mobile) -->
       <div class="flex flex-col lg:hidden mt-4 space-y-4">
         <div v-if="!isLoggedIn" class="space-x-2">
@@ -35,6 +44,15 @@
 
     <!-- Desktop Navigation (Static) -->
     <div class="hidden lg:flex items-center space-x-4">
+      <!-- Admin Panel Link (Desktop, only for admins) -->
+      <Link 
+        v-if="isAdmin" 
+        :href="route('admin.dashboard')" 
+        class="text-yellow-400 font-extrabold border-b-2 border-transparent hover:border-yellow-400 px-4 py-2 cursor-pointer"
+      >
+        🔐 Admin Panel
+      </Link>
+
       <!-- Greeting and Account Icon with Dropdown (Logged In) -->
       <div v-if="isLoggedIn" class="relative flex items-center space-x-4">
         <span class="text-white">Hi, {{ userName }}</span>
@@ -62,6 +80,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { Link, usePage } from "@inertiajs/vue3";
 import { route } from "ziggy-js";
 import { ref, onMounted, watch, computed } from "vue";
+import { usePermissions } from '@/composables/usePermissions';
 
 // Add FontAwesome icons to library (removed search icon)
 library.add(faBars, faUser);
@@ -84,9 +103,10 @@ const menuRoute = route('menu');
 
 // Compute user name from Inertia props
 const page = usePage();
+const { user, isAdmin } = usePermissions();
+
 const userName = computed(() => {
-  const user = page.props.auth?.user;
-  return user ? user.name || 'User' : ''; // Fallback to 'User' if name is missing
+  return user.value ? user.value.name || 'User' : ''; // Fallback to 'User' if name is missing
 });
 
 // Check login status from localStorage or Inertia props
@@ -97,9 +117,9 @@ const checkLoginStatus = () => {
 };
 
 // Sync with Inertia page props
-watch(() => page.props.auth?.user, (user) => {
-  isLoggedIn.value = !!user;
-  if (user) localStorage.setItem("isLoggedIn", "true");
+watch(() => page.props.auth?.user, (authUser) => {
+  isLoggedIn.value = !!authUser;
+  if (authUser) localStorage.setItem("isLoggedIn", "true");
   else localStorage.removeItem("isLoggedIn");
 }, { immediate: true });
 

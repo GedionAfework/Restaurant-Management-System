@@ -7,7 +7,7 @@
           <p class="text-white/80">Manage system permissions by module</p>
         </div>
         <Link
-          :href="route('admin.permissions.create')"
+          :href="route('permissions.create')"
           class="glass-button px-6 py-3 rounded-lg text-white font-semibold hover:scale-105 transition"
         >
           ➕ Create Permission
@@ -59,7 +59,7 @@
                   <td class="py-4 px-4 text-right">
                     <div class="flex justify-end space-x-2">
                       <Link
-                        :href="route('admin.permissions.edit', permission.id)"
+                        :href="route('permissions.edit', permission.id)"
                         class="glass-button px-4 py-2 text-sm rounded"
                       >
                         ✏️ Edit
@@ -97,7 +97,7 @@ const props = defineProps({
 
 const deletePermission = (id) => {
   if (confirm('Are you sure you want to delete this permission?')) {
-    router.delete(route('admin.permissions.destroy', id))
+    router.delete(route('permissions.destroy', id))
   }
 }
 </script>

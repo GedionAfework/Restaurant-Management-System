@@ -9,29 +9,38 @@
 
       <nav class="mt-5">
         <ul class="space-y-2">
-          <li v-if="hasPermission('dashboard-view') || isAdmin">
-            <Link :href="dashboardRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📊 Dashboard</Link>
-          </li>
-          <li v-if="hasPermission('employees-view') || isAdmin">
-            <Link :href="employeesRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">👥 Employees</Link>
-          </li>
-          <li v-if="hasPermission('menu-view') || isAdmin">
-            <Link :href="foodRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍔 Food/Menu</Link>
-          </li>
-          <li v-if="hasPermission('menu-view') || isAdmin">
-            <Link :href="route('admin.menu-categories.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📋 Menu Categories</Link>
-          </li>
-          <li v-if="hasPermission('orders-view') || isAdmin">
-            <Link :href="route('admin.orders.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📦 Orders</Link>
-          </li>
-          <li v-if="hasPermission('orders-view') || isAdmin">
-            <Link :href="route('admin.kitchen.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍳 Kitchen Display</Link>
-          </li>
-          <li v-if="hasPermission('tables-view') || isAdmin">
-            <Link :href="route('admin.tables.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🪑 Tables</Link>
-          </li>
-          <li v-if="hasPermission('roles-view') || isAdmin">
-            <Link :href="route('admin.roles.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🔐 Roles & Permissions</Link>
+          <!-- Only show admin navigation if user is authenticated and is admin -->
+          <template v-if="user && (isAdmin || hasPermission('dashboard-view'))">
+            <li v-if="hasPermission('dashboard-view') || isAdmin">
+              <Link :href="dashboardRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📊 Dashboard</Link>
+            </li>
+            <li v-if="hasPermission('employees-view') || isAdmin">
+              <Link :href="employeesRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">👥 Employees</Link>
+            </li>
+            <li v-if="hasPermission('menu-view') || isAdmin">
+              <Link :href="foodRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍔 Food/Menu</Link>
+            </li>
+            <li v-if="hasPermission('menu-view') || isAdmin">
+              <Link :href="route('menu-categories.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📋 Menu Categories</Link>
+            </li>
+            <li v-if="hasPermission('orders-view') || isAdmin">
+              <Link :href="route('admin.orders.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📦 Orders</Link>
+            </li>
+            <li v-if="hasPermission('orders-view') || isAdmin">
+              <Link :href="route('admin.kitchen.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍳 Kitchen Display</Link>
+            </li>
+            <li v-if="hasPermission('tables-view') || isAdmin">
+              <Link :href="route('admin.tables.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🪑 Tables</Link>
+            </li>
+            <li v-if="hasPermission('roles-view') || isAdmin">
+              <Link :href="route('roles.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🔐 Roles & Permissions</Link>
+            </li>
+            <li class="pt-4 border-t border-gray-700">
+              <Link :href="homeRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition text-sm text-gray-400">← Back to Website</Link>
+            </li>
+          </template>
+          <li v-else class="text-red-400 text-sm px-4 py-2">
+            ⚠️ Admin access required
           </li>
         </ul>
       </nav>
@@ -49,9 +58,7 @@ import { route } from "ziggy-js";
 import { usePermissions } from '@/composables/usePermissions';
 import { computed } from 'vue';
 
-const { hasPermission, user } = usePermissions();
-
-const isAdmin = computed(() => user.value?.is_admin || false);
+const { hasPermission, user, isAdmin } = usePermissions();
 
 const homeRoute = route("home");
 const dashboardRoute = route('admin.dashboard');

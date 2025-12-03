@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 
 const page = usePage()

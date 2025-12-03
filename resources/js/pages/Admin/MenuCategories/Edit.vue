@@ -96,7 +96,7 @@
             <!-- Actions -->
             <div class="flex justify-end space-x-4 pt-6 border-t border-white/20">
               <Link
-                :href="route('admin.menu-categories.index')"
+                :href="route('menu-categories.index')"
                 class="glass-button px-6 py-3 rounded-lg"
               >
                 Cancel
@@ -153,7 +153,7 @@ const handleImageChange = (event) => {
 }
 
 const submit = () => {
-  form.post(route('admin.menu-categories.update', props.category.category_id), {
+  form.post(route('menu-categories.update', props.category.category_id), {
     forceFormData: true,
   })
 }

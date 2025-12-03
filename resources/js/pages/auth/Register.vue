@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, router } from "@inertiajs/vue3";
 import { route } from 'ziggy-js';
 import { Link } from '@inertiajs/vue3';
 
@@ -88,11 +88,8 @@ const form = useForm({
 const register = () => {
   form.post(route('register'), {
     onSuccess: () => {
-      // Redirect to login page instead of setting logged-in state
-      form.visit(route('login'), {
-        preserveState: true,
-        preserveScroll: true,
-      });
+      // Redirect to login page after successful registration
+      router.visit(route('login'));
     },
     onError: (errors) => {
       console.log("Registration failed:", errors);

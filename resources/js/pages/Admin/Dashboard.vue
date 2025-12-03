@@ -167,7 +167,7 @@
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-xl font-bold">Recent Orders</h3>
               <Link
-                :href="route('admin.orders')"
+                :href="route('admin.orders.index')"
                 class="text-sm text-white/70 hover:text-white"
               >
                 View All →
@@ -221,7 +221,7 @@
               </Link>
               <Link
                 v-if="hasPermission('orders-view') || isAdmin"
-                :href="route('admin.orders')"
+                :href="route('admin.orders.index')"
                 class="glass-button text-center py-4 rounded-lg hover:scale-105 transition"
               >
                 📋 View Orders
@@ -235,7 +235,7 @@
               </Link>
               <Link
                 v-if="hasPermission('roles-view') || isAdmin"
-                :href="route('admin.roles.index')"
+                :href="route('roles.index')"
                 class="glass-button text-center py-4 rounded-lg hover:scale-105 transition"
               >
                 🔐 Manage Roles

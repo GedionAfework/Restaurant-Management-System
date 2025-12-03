@@ -86,7 +86,7 @@
             <!-- Actions -->
             <div class="flex justify-end space-x-4 pt-6 border-t border-white/20">
               <Link
-                :href="route('admin.roles.index')"
+                :href="route('roles.index')"
                 class="glass-button px-6 py-3 rounded-lg"
               >
                 Cancel
@@ -126,7 +126,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.put(route('admin.roles.update', props.role.id))
+  form.put(route('roles.update', props.role.id))
 }
 
 const processing = form.processing
