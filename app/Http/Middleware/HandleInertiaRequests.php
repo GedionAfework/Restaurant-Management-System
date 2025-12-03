@@ -44,11 +44,30 @@ class HandleInertiaRequests extends Middleware
             $quote = ['message' => 'Something inspiring', 'author' => 'Unknown'];
         }
 
+        $user = $request->user();
+        $userPermissions = null;
+        
+        if ($user && $user->role) {
+            // Load permissions for the user's role
+            $userPermissions = $user->role->permissions->pluck('slug')->toArray();
+        }
+
         return array_merge(parent::share($request), [
             'name' => config('app.name'),
             'quote' => $quote,
             'auth' => [
-                'user' => $request->user(), // Default web guard (admins)
+                'user' => $user ? [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role ? [
+                        'id' => $user->role->id,
+                        'name' => $user->role->name,
+                        'slug' => $user->role->slug,
+                    ] : null,
+                    'permissions' => $userPermissions,
+                    'is_admin' => $user->isAdmin(),
+                ] : null,
                 'customer' => Auth::guard('customer')->user(), // Customer guard
             ],
             'flash' => [

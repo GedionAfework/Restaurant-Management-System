@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -73,34 +75,46 @@ Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('adm
 
 // Admin Routes (Protected by auth)
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware('permission:dashboard-view')
+        ->name('admin.dashboard');
 
     // Employee Management
-    Route::controller(EmployeeController::class)->group(function () {
+    Route::controller(EmployeeController::class)->middleware('permission:employees-view')->group(function () {
         Route::get('/employees', 'index')->name('admin.employees');
-        Route::get('/employees/create', 'create')->name('admin.employees.create');
-        Route::post('/employees', 'store')->name('admin.employees.store');
-        Route::get('/employees/{id}/edit', 'edit')->name('admin.employees.edit');
-        Route::put('/employees/{id}', 'update')->name('admin.employees.update');
-        Route::delete('/employees/{id}', 'destroy')->name('admin.employees.destroy');
+        Route::get('/employees/create', 'create')->middleware('permission:employees-create')->name('admin.employees.create');
+        Route::post('/employees', 'store')->middleware('permission:employees-create')->name('admin.employees.store');
+        Route::get('/employees/{id}/edit', 'edit')->middleware('permission:employees-edit')->name('admin.employees.edit');
+        Route::put('/employees/{id}', 'update')->middleware('permission:employees-edit')->name('admin.employees.update');
+        Route::delete('/employees/{id}', 'destroy')->middleware('permission:employees-delete')->name('admin.employees.destroy');
     });
 
     // Food Management
-    Route::controller(FoodController::class)->group(function () {
+    Route::controller(FoodController::class)->middleware('permission:menu-view')->group(function () {
         Route::get('/food', 'index')->name('admin.food');
-        Route::get('/food/create', 'create')->name('admin.food.create');
-        Route::post('/food', 'store')->name('admin.food.store');
-        Route::get('/food/{id}/edit', 'edit')->name('admin.food.edit');
-        Route::put('/food/{id}/update', 'update')->name('admin.food.update');
-        Route::delete('/food/{id}', 'destroy')->name('admin.food.destroy');
+        Route::get('/food/create', 'create')->middleware('permission:menu-create')->name('admin.food.create');
+        Route::post('/food', 'store')->middleware('permission:menu-create')->name('admin.food.store');
+        Route::get('/food/{id}/edit', 'edit')->middleware('permission:menu-edit')->name('admin.food.edit');
+        Route::put('/food/{id}/update', 'update')->middleware('permission:menu-edit')->name('admin.food.update');
+        Route::delete('/food/{id}', 'destroy')->middleware('permission:menu-delete')->name('admin.food.destroy');
     });
 
     // Order Management
-    Route::controller(OrderController::class)->group(function () {
+    Route::controller(OrderController::class)->middleware('permission:orders-view')->group(function () {
         Route::get('/orders', 'index')->name('admin.orders');
         Route::get('/orders/{id}', 'show')->name('admin.orders.show');
-        Route::put('/orders/{id}', 'update')->name('admin.orders.update');
+        Route::put('/orders/{id}', 'update')->middleware('permission:orders-update')->name('admin.orders.update');
+        Route::post('/orders', 'store')->middleware('permission:orders-create')->name('admin.orders.store');
     });
+
+    // Role Management
+    Route::resource('roles', RoleController::class)
+        ->except(['show'])
+        ->middleware('permission:roles-view');
+
+    // Permission Management
+    Route::resource('permissions', PermissionController::class)
+        ->middleware('permission:permissions-manage');
 });
 
 // Temporary Customer Login (Remove after proper login is implemented)
