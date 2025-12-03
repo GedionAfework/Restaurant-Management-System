@@ -52,12 +52,18 @@ class DashboardController extends Controller
         // Revenue Trend (Last 7 days)
         $revenueTrend = Order::select(
             DB::raw('DATE(created_at) as date'),
-            DB::raw('SUM(total_amount) as revenue')
+            DB::raw('COALESCE(SUM(total_amount), 0) as revenue')
         )
             ->where('created_at', '>=', $now->copy()->subDays(6)->startOfDay())
             ->groupBy('date')
             ->orderBy('date')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'date' => $item->date,
+                    'revenue' => (float) $item->revenue,
+                ];
+            });
 
         // Order Status Distribution
         $orderStatusDistribution = Order::select(
