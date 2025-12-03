@@ -23,8 +23,18 @@ class FoodController extends Controller
         }
 
         // Filter by availability
-        if ($request->has('is_available')) {
+        if ($request->has('is_available') && $request->is_available !== 'all') {
             $query->where('is_available', $request->is_available === 'true');
+        }
+
+        // Search functionality
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('type', 'like', "%{$search}%");
+            });
         }
 
         $foods = $query->orderBy('display_order')->orderBy('name')->paginate(15);
@@ -39,6 +49,7 @@ class FoodController extends Controller
             'filters' => [
                 'category_id' => $request->category_id ?? 'all',
                 'is_available' => $request->is_available ?? 'all',
+                'search' => $request->search ?? '',
             ],
         ]);
     }
