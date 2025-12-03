@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_categories', function (Blueprint $table) {
-            $table->bigIncrements('category_id');
-            $table->string('category_name');
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
+        Schema::create('menu_add_ons', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('food_id')->constrained('food')->onDelete('cascade');
+            $table->string('name'); // e.g., "Extra Cheese", "Bacon", "Avocado"
+            $table->decimal('price', 10, 2)->default(0);
             $table->integer('display_order')->default(0);
-            $table->boolean('is_active')->default(true);
-            $table->string('icon')->nullable(); // Emoji or icon identifier
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_categories');
+        Schema::dropIfExists('menu_add_ons');
     }
 };

@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\FoodController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\TableController;
+use App\Http\Controllers\Admin\MenuCategoryController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +91,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::delete('/employees/{id}', 'destroy')->middleware('permission:employees-delete')->name('admin.employees.destroy');
     });
 
+    // Menu Category Management
+    Route::resource('menu-categories', MenuCategoryController::class)
+        ->middleware('permission:menu-view');
+
     // Food Management
     Route::controller(FoodController::class)->middleware('permission:menu-view')->group(function () {
         Route::get('/food', 'index')->name('admin.food');
@@ -115,6 +121,21 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // Permission Management
     Route::resource('permissions', PermissionController::class)
         ->middleware('permission:permissions-manage');
+
+    // Table Management
+    Route::controller(TableController::class)->middleware('permission:tables-view')->group(function () {
+        Route::get('/tables', 'index')->name('admin.tables.index');
+        Route::get('/tables/create', 'create')->middleware('permission:tables-manage')->name('admin.tables.create');
+        Route::post('/tables', 'store')->middleware('permission:tables-manage')->name('admin.tables.store');
+        Route::get('/tables/{id}', 'show')->name('admin.tables.show');
+        Route::get('/tables/{id}/edit', 'edit')->middleware('permission:tables-manage')->name('admin.tables.edit');
+        Route::put('/tables/{id}', 'update')->middleware('permission:tables-manage')->name('admin.tables.update');
+        Route::delete('/tables/{id}', 'destroy')->middleware('permission:tables-manage')->name('admin.tables.destroy');
+        Route::post('/tables/{id}/release', 'release')->middleware('permission:tables-assign')->name('admin.tables.release');
+        Route::get('/tables/layout', 'layout')->name('admin.tables.layout');
+        Route::post('/tables/positions', 'updatePositions')->middleware('permission:tables-manage')->name('admin.tables.update-positions');
+        Route::post('/tables/{id}/assign-order', 'assignToOrder')->middleware('permission:tables-assign')->name('admin.tables.assign-order');
+    });
 });
 
 // Temporary Customer Login (Remove after proper login is implemented)

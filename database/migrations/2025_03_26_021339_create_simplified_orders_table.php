@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable()->constrained('customers')->onDelete('set null'); // Links to customers table
+            $table->foreignId('table_id')->nullable()->constrained('tables', 'table_id')->onDelete('set null'); // Links to tables
             $table->foreignId('food_id')->constrained('food')->onDelete('cascade'); // Links to food table
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2); // Price of the item at order time

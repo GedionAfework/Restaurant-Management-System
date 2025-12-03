@@ -14,7 +14,15 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id('table_id');
             $table->string('table_number');
-            $table->enum('status', ['available', 'reserved', 'occupied']);
+            $table->integer('capacity')->default(4);
+            $table->string('location')->nullable();
+            $table->string('zone')->nullable();
+            $table->enum('shape', ['round', 'square', 'rectangular', 'booth'])->default('round');
+            $table->integer('floor')->default(1);
+            $table->integer('position_x')->nullable();
+            $table->integer('position_y')->nullable();
+            $table->text('notes')->nullable();
+            $table->enum('status', ['available', 'occupied', 'reserved', 'cleaning'])->default('available');
             $table->timestamps();
         });
     }

@@ -18,8 +18,14 @@
           <li v-if="hasPermission('menu-view') || isAdmin">
             <Link :href="foodRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🍔 Food/Menu</Link>
           </li>
+          <li v-if="hasPermission('menu-view') || isAdmin">
+            <Link :href="route('admin.menu-categories.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📋 Menu Categories</Link>
+          </li>
           <li v-if="hasPermission('orders-view') || isAdmin">
             <Link :href="ordersRoute" class="block px-4 py-2 rounded hover:bg-gray-800 transition">📦 Orders</Link>
+          </li>
+          <li v-if="hasPermission('tables-view') || isAdmin">
+            <Link :href="route('admin.tables.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🪑 Tables</Link>
           </li>
           <li v-if="hasPermission('roles-view') || isAdmin">
             <Link :href="route('admin.roles.index')" class="block px-4 py-2 rounded hover:bg-gray-800 transition">🔐 Roles & Permissions</Link>
