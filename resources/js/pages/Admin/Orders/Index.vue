@@ -58,7 +58,7 @@
             <select
               v-model="filters.status"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg bg-white/95 text-gray-900"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>

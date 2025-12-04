@@ -25,7 +25,7 @@
             <select
               v-model="filters.category_id"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg bg-white/95 text-gray-900"
             >
               <option value="all">All Categories</option>
               <option
@@ -42,7 +42,7 @@
             <select
               v-model="filters.is_available"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg"
             >
               <option value="all">All Items</option>
               <option value="true">Available</option>

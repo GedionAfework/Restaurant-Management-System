@@ -32,7 +32,7 @@ export const auth = reactive({
 });
 
 createInertiaApp({
-    resolve: name =>  resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
+    resolve: name =>  resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ 
             render: () => {

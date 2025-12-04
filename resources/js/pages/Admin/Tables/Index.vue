@@ -50,7 +50,7 @@
             <select
               v-model="filters.status"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg"
             >
               <option value="all">All Statuses</option>
               <option value="available">Available</option>
@@ -64,7 +64,7 @@
             <select
               v-model="filters.zone"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg"
             >
               <option value="all">All Zones</option>
               <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
@@ -75,7 +75,7 @@
             <select
               v-model="filters.floor"
               @change="applyFilters"
-              class="glass-input w-full px-4 py-2 rounded-lg text-white"
+              class="glass-input w-full px-4 py-2 rounded-lg"
             >
               <option value="all">All Floors</option>
               <option v-for="floor in floors" :key="floor" :value="floor">Floor {{ floor }}</option>

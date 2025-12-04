@@ -152,12 +152,60 @@ html {
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
     }
 
     .glass-input:focus {
         background: rgba(255, 255, 255, 0.15);
         border-color: rgba(255, 255, 255, 0.4);
         outline: none;
+    }
+
+    /* Select dropdowns - light background with dark text for readability */
+    select.glass-input,
+    select[class*="glass-input"] {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1f2937 !important;
+    }
+
+    select.glass-input option,
+    select[class*="glass-input"] option {
+        background: white !important;
+        color: #1f2937 !important;
+        padding: 8px 12px;
+    }
+
+    select.glass-input:focus,
+    select[class*="glass-input"]:focus {
+        background: white !important;
+        color: #1f2937 !important;
+    }
+
+    /* Select dropdowns - light background with dark text for readability */
+    select.glass-input,
+    select[class*="glass-input"] {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1f2937 !important;
+    }
+
+    select.glass-input option,
+    select[class*="glass-input"] option {
+        background: white !important;
+        color: #1f2937 !important;
+        padding: 8px 12px;
+    }
+
+    select.glass-input:focus,
+    select[class*="glass-input"]:focus,
+    select[class*="glass"]:focus {
+        background: white !important;
+        color: #1f2937 !important;
+    }
+
+    /* Override text-white on select elements specifically */
+    select.text-white,
+    select[class*="text-white"] {
+        color: #1f2937 !important;
     }
 
     /* Gradient backgrounds for glassmorphism */

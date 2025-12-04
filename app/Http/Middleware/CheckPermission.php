@@ -22,6 +22,11 @@ class CheckPermission
                 ->with('error', 'Please login to access this page.');
         }
 
+        // Admin bypasses all permission checks
+        if ($user->isAdmin()) {
+            return $next($request);
+        }
+
         if (!$user->hasPermission($permission)) {
             abort(403, 'You do not have permission to access this resource.');
         }

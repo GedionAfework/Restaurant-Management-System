@@ -46,7 +46,7 @@
                 <select
                   v-model="form.shape"
                   required
-                  class="glass-input w-full px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/50"
+                  class="glass-input w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50"
                 >
                   <option value="round">Round ⭕</option>
                   <option value="square">Square ⬜</option>
@@ -96,8 +96,8 @@
               <select
                 v-model="form.status"
                 required
-                class="glass-input w-full px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/50"
-              >
+                  class="glass-input w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50"
+                >
                 <option value="available">Available</option>
                 <option value="occupied">Occupied</option>
                 <option value="reserved">Reserved</option>

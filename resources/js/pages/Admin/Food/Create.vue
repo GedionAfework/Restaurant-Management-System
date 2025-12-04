@@ -32,7 +32,7 @@
                   <label class="block text-sm font-medium mb-2">Category</label>
                   <select
                     v-model="form.category_id"
-                    class="glass-input w-full px-4 py-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/50"
+                    class="glass-input w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white/50"
                   >
                     <option :value="null">No Category</option>
                     <option

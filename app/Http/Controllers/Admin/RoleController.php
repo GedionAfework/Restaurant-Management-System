@@ -58,7 +58,7 @@ class RoleController extends Controller
             $role->assignPermissions($permissions);
         }
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('roles.index')
             ->with('success', 'Role created successfully!');
     }
 
@@ -83,7 +83,7 @@ class RoleController extends Controller
 
         // Prevent editing system roles
         if ($role->is_system) {
-            return redirect()->route('admin.roles.index')
+            return redirect()->route('roles.index')
                 ->with('error', 'System roles cannot be edited.');
         }
 
@@ -102,7 +102,7 @@ class RoleController extends Controller
 
         // Prevent updating system roles
         if ($role->is_system) {
-            return redirect()->route('admin.roles.index')
+            return redirect()->route('roles.index')
                 ->with('error', 'System roles cannot be updated.');
         }
 
@@ -125,7 +125,7 @@ class RoleController extends Controller
             $role->assignPermissions($permissions);
         }
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('roles.index')
             ->with('success', 'Role updated successfully!');
     }
 
@@ -138,19 +138,19 @@ class RoleController extends Controller
 
         // Prevent deleting system roles
         if ($role->is_system) {
-            return redirect()->route('admin.roles.index')
+            return redirect()->route('roles.index')
                 ->with('error', 'System roles cannot be deleted.');
         }
 
         // Check if role has users
         if ($role->users()->count() > 0) {
-            return redirect()->route('admin.roles.index')
+            return redirect()->route('roles.index')
                 ->with('error', 'Cannot delete role. It is assigned to users.');
         }
 
         $role->delete();
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('roles.index')
             ->with('success', 'Role deleted successfully!');
     }
 }
